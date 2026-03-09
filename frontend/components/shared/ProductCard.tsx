@@ -21,10 +21,7 @@ const ProductCard = ({
   return (
     <div className={cn(className)}>
       <Link href={`/product/${name}`}>
-        <div>
-          <Image src={imageUrl} alt="" width={215} height={215} />
-        </div>
-
+        <Image src={imageUrl} alt={imageUrl} width={215} height={215} />
         <Title text={name} className="mb-1 mt-3 font-bold" />
 
         <p className="text-sm text-gray-400">
