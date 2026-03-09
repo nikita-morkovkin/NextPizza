@@ -1,3 +1,4 @@
+import Providers from "@/components/providers/Providers";
 import { Header } from "@/components/shared";
 import { type Metadata } from "next";
 import { Nunito } from "next/font/google";
@@ -22,8 +23,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${nunito.className} antialiased`}>
-        <Header />
-        <main className="min-h-screen">{children}</main>
+        <Providers>
+          <Header />
+          <main className="min-h-screen">{children}</main>
+        </Providers>
       </body>
     </html>
   );
