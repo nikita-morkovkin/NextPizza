@@ -5,7 +5,7 @@ import { CreateIngredientDto } from './dto/create-ingredient.dto';
 import { IngredientService } from './ingredient.service';
 
 @Controller('ingredient')
-@ApiTags('ingredient')
+@ApiTags('Ингридиенты')
 export class IngredientController {
   public constructor(private readonly ingredientService: IngredientService) {}
 
