@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ChangeCategoryDto } from './dto/change-category.dto';
 import { CreateCategoryDto } from './dto/create-category.dto';
@@ -40,7 +40,7 @@ export class CategoryService {
 
   public async delete(categoryId: string) {
     if (!categoryId) {
-      throw new ConflictException('Категория не существует');
+      throw new NotFoundException('Категория не существует');
     }
 
     await this.prisma.category.delete({
