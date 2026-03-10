@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ChangeProductDto } from './dto/change-product.dto';
@@ -17,9 +18,9 @@ import { ProductService } from './product.service';
 export class ProductController {
   public constructor(private readonly productService: ProductService) {}
 
-  @Get('search/:query')
+  @Get('search')
   @ApiOperation({ summary: 'Поиск товаров по запросу' })
-  public async search(@Param('query') query: string) {
+  public async search(@Query('query') query: string) {
     return this.productService.search(query);
   }
 
