@@ -7,6 +7,10 @@ import { CreateIngredientDto } from './dto/create-ingredient.dto';
 export class IngredientService {
   public constructor(private readonly prisma: PrismaService) {}
 
+  public async getAll() {
+    return await this.prisma.ingredient.findMany();
+  }
+
   public async create(dto: CreateIngredientDto) {
     const ingredient = await this.prisma.ingredient.findFirst({
       where: {
