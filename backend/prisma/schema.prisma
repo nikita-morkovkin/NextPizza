@@ -1,30 +1,184 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
-  moduleFormat    = "cjs"
+  provider     = "prisma-client"
+  output       = "../generated/prisma"
+  moduleFormat = "cjs"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
+enum OrderStatus {
+  PENDING
+  SUCCEEDED
+  CANCELLED
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
 model User {
-  id        String      @id @default(uuid())
+  id String @id @default(uuid())
 
-  fullName  String
-  email     String   @unique
-  password  String
+  fullName   String    @map("full_name")
+  email      String    @unique
+  password   String
+  role       UserRole  @default(USER)
+  verifiedAt DateTime? @map("verified_at")
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  provider   String? @map("provider")
+  providerId String? @map("provider_id")
+
+  cart   Cart?
+  orders Order[]
+
+  verificationCode VerificationCode?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Category {
+  id String @id @default(uuid())
+
+  name String
+
+  products Product[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("categories")
 }
 
 model Product {
-  id        String      @id @default(uuid())
-  
-  name      String
-  price     Int
+  id String @id @default(uuid())
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  name     String
+  imageUrl String @map("image_url")
+
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String   @map("category_id")
+
+  ingredients     Ingredient[]
+  productVariants ProductVariant[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("products")
+}
+
+model ProductVariant {
+  id String @id @default(uuid())
+
+  price     Int
+  size      Int?
+  pizzaType Int? @map("pizza_type")
+
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String  @map("product_id")
+
+  items CartItem[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("product_variants")
+}
+
+model Ingredient {
+  id String @id @default(uuid())
+
+  name     String
+  price    Int
+  imageUrl String @map("image_url")
+
+  products Product[]
+  items    CartItem[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("ingredients")
+}
+
+model Cart {
+  id String @id @default(uuid())
+
+  token       String
+  totalAmount Int    @default(0) @map("total_amount")
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String? @unique @map("user_id")
+
+  items CartItem[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("carts")
+}
+
+model CartItem {
+  id String @id @default(uuid())
+
+  quantity Int
+
+  cart   Cart   @relation(fields: [cartId], references: [id])
+  cartId String @map("cart_id")
+
+  productVariant   ProductVariant @relation(fields: [productVariantId], references: [id])
+  productVariantId String         @map("product_variant_id")
+
+  ingredients Ingredient[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("cart_items")
+}
+
+model Order {
+  id String @id @default(uuid())
+
+  totalAmount Int         @map("total_amount")
+  token       String
+  status      OrderStatus @default(PENDING) @map("status")
+  paymentId   String?     @map("payment_id")
+
+  items Json
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @map("user_id")
+
+  fullName String  @map("full_name")
+  email    String
+  phone    String
+  address  String
+  comment  String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("orders")
+}
+
+model VerificationCode {
+  id String @id @default(uuid())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique @map("user_id")
+
+  code String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([code, userId])
+  @@map("verification_codes")
 }
