@@ -1,0 +1,7 @@
+export interface IngredientType {
+  id: number;
+
+  name: string;
+  price: number;
+  type: string;
+}

@@ -1,5 +1,5 @@
+import { Header } from "@/components/common";
 import Providers from "@/components/providers/Providers";
-import { Header } from "@/components/shared";
 import { type Metadata } from "next";
 import { Nunito } from "next/font/google";
 import { type ReactNode } from "react";

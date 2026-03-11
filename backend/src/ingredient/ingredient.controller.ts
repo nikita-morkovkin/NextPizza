@@ -1,4 +1,12 @@
-import { Body, Controller, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ChangeIngredientDto } from './dto/change-ingredient.dto';
 import { CreateIngredientDto } from './dto/create-ingredient.dto';
@@ -9,7 +17,7 @@ import { IngredientService } from './ingredient.service';
 export class IngredientController {
   public constructor(private readonly ingredientService: IngredientService) {}
 
-  @Post('get-all')
+  @Get('get-all')
   @ApiOperation({ summary: 'Get all ingredients' })
   @ApiResponse({
     status: 200,
@@ -30,7 +38,7 @@ export class IngredientController {
     return await this.ingredientService.create(dto);
   }
 
-  @Post('change')
+  @Patch('change')
   @ApiOperation({ summary: 'Change an existing ingredient' })
   @ApiResponse({
     status: 200,
@@ -40,7 +48,7 @@ export class IngredientController {
     return await this.ingredientService.change(dto);
   }
 
-  @Post('delete/:name')
+  @Delete('delete/:name')
   @ApiResponse({
     status: 200,
     description: 'The ingredient has been successfully deleted.',
