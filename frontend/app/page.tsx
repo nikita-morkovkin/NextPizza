@@ -1,8 +1,8 @@
-import { Container } from "@/components/shared";
-import Filters from "@/components/shared/Filters";
-import ProductsGroupList from "@/components/shared/ProductsGroupList";
-import { Title } from "@/components/shared/Title";
-import TopBar from "@/components/shared/TopBar";
+import { Container } from "@/components/common";
+import Filters from "@/components/common/Filters";
+import ProductsGroupList from "@/components/common/ProductsGroupList";
+import { Title } from "@/components/common/Title";
+import TopBar from "@/components/common/TopBar";
 
 export const MOCK_PIZZAS = [
   {

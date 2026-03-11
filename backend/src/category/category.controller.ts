@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Patch, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CategoryService } from './category.service';
 import { ChangeCategoryDto } from './dto/change-category.dto';
@@ -15,7 +15,7 @@ export class CategoryController {
     return await this.categoryService.create(dto);
   }
 
-  @Post('change/:categoryId')
+  @Patch('change/:categoryId')
   @ApiOperation({ summary: 'Change category' })
   public async change(
     @Param('categoryId') categoryId: string,
@@ -24,7 +24,7 @@ export class CategoryController {
     return await this.categoryService.change(categoryId, dto);
   }
 
-  @Post('delete/:categoryId')
+  @Delete('delete/:categoryId')
   @ApiOperation({ summary: 'Delete category' })
   public async delete(@Param('categoryId') categoryId: string) {
     return await this.categoryService.delete(categoryId);
