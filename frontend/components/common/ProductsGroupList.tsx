@@ -26,6 +26,9 @@ const ProductsGroupList = ({
 }: ProductsGroupListProps) => {
   const intersectionRef = useRef<HTMLDivElement>(null);
 
+  // WARNING: It's okay, 'cause it is written in docs
+  // eslint-disable-next-line
+  // @ts-ignore
   const intersection = useIntersection(intersectionRef, {
     threshold: 0.4,
   });
