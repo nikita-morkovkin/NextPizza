@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { isDev } from "@/shared/utils/is-dev.util";
 import { Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,6 +7,7 @@ import { Button } from "../ui";
 import { Title } from "./Title";
 
 interface ProductCardProps {
+  productId: string;
   name: string;
   price: number;
   imageUrl: string;
@@ -13,6 +15,7 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({
+  productId,
   name,
   price,
   imageUrl,
@@ -20,8 +23,14 @@ const ProductCard = ({
 }: ProductCardProps) => {
   return (
     <div className={cn(className)}>
-      <Link href={`/product/${name}`}>
-        <Image unoptimized src={imageUrl} alt={imageUrl} width={215} height={215} />
+      <Link href={`/product/${productId}`}>
+        <Image
+          unoptimized={isDev}
+          src={imageUrl}
+          alt={imageUrl}
+          width={215}
+          height={215}
+        />
         <Title text={name} className="mb-1 mt-3 font-bold" />
 
         <p className="text-sm text-gray-400">
