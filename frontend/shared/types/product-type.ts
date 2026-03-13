@@ -1,12 +1,16 @@
+import { type CategoryType } from "./category.type";
+import { type IngredientType } from "./ingredient.type";
+import { type ProductVariantType } from "./product-variant.type";
+
 export interface ProductType {
-  id: number;
+  id: string;
 
   name: string;
   imageUrl: string;
 
-  category: any[];
+  category: CategoryType;
   categoryId: string;
 
-  ingredients: any[];
-  productVariants: any[];
+  ingredients: IngredientType[];
+  productVariants: ProductVariantType[];
 }

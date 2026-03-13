@@ -69,4 +69,16 @@ export class ProductService {
       },
     });
   }
+
+  public async getAll() {
+    const products = await this.prisma.product.findMany({
+      include: {
+        ingredients: true,
+        productVariants: true,
+        category: true,
+      },
+    });
+
+    return products;
+  }
 }

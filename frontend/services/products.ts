@@ -8,3 +8,9 @@ export const search = async (query: string) => {
 
   return data;
 };
+
+export const getAll = async () => {
+  const { data } = await axiosInstance.get<ProductType[]>(`/product/all`);
+
+  return data;
+};

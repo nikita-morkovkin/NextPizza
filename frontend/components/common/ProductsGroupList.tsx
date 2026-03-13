@@ -1,7 +1,8 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { type ProductType } from "@/shared/types/product-type";
+import { useAppDispatch } from "@/store/hooks";
 import { changeCategory } from "@/store/slices/category.slice";
 import { useEffect, useRef } from "react";
 import { useIntersection } from "react-use";
@@ -10,10 +11,10 @@ import { Title } from "./Title";
 
 interface ProductsGroupListProps {
   title: string;
-  products: any[];
+  products: ProductType[];
   className?: string;
   listClassname?: string;
-  categoryId?: number;
+  categoryId?: string;
 }
 
 const ProductsGroupList = ({
@@ -23,24 +24,26 @@ const ProductsGroupList = ({
   listClassname,
   categoryId,
 }: ProductsGroupListProps) => {
-  const intersectionRef = useRef(null);
+  const intersectionRef = useRef<HTMLDivElement>(null);
+
   const intersection = useIntersection(intersectionRef, {
     threshold: 0.4,
   });
 
   const dispatch = useAppDispatch();
-  const activeCategory = useAppSelector(
-    (state) => state.category.activeCategory
-  );
 
   useEffect(() => {
     if (intersection?.isIntersecting) {
-      dispatch(changeCategory(categoryId!));
+      dispatch(changeCategory(categoryId || ""));
     }
   }, [categoryId, intersection?.isIntersecting, title, dispatch]);
 
   return (
-    <div className={cn(className)} id={title} ref={intersectionRef}>
+    <div
+      className={cn("scroll-mt-[100px]", className)}
+      id={title}
+      ref={intersectionRef}
+    >
       <Title text={title} className="mb-10 font-bold" />
 
       <div className={cn("grid grid-cols-3 gap-[50px]", listClassname)}>
@@ -48,7 +51,7 @@ const ProductsGroupList = ({
           <ProductCard
             key={product.id}
             name={product.name}
-            price={product.items[0].price}
+            price={product.productVariants[0].price || 0}
             imageUrl={product.imageUrl}
           />
         ))}

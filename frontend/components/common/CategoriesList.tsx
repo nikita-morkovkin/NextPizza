@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { useGetAllCategories } from "@/shared/hooks/useGetAllCategories";
 import { useAppSelector } from "@/store/hooks";
 import { changeCategory } from "@/store/slices/category.slice";
 import { useDispatch } from "react-redux";
@@ -9,22 +10,17 @@ interface CategoriesProps {
   className?: string;
 }
 
-const categories = [
-  { id: 1, name: "Пиццы" },
-  { id: 2, name: "Десерты" },
-  { id: 3, name: "Напитки" },
-  { id: 4, name: "Салаты" },
-  { id: 5, name: "Супы" },
-  { id: 6, name: "Закуски" },
-  { id: 7, name: "Специальные" },
-];
-
 const CategoriesList = ({ className }: CategoriesProps) => {
+  const { categories } = useGetAllCategories();
   const dispatch = useDispatch();
 
   const activeCategoryId = useAppSelector(
     (state) => state.category.activeCategory
   );
+
+  if (!categories) {
+    return null;
+  }
 
   return (
     <div

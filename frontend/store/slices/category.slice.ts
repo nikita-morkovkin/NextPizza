@@ -1,19 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface CategoryState {
-  activeCategory: number;
-  changeCategory: (category: number) => void;
+  activeCategory: string;
+  changeCategory: (category: string) => void;
 }
 
 const initialState = {
-  activeCategory: 1,
+  activeCategory: "",
 };
 
 export const categorySlice = createSlice({
   name: "category",
   initialState,
   reducers: {
-    changeCategory: (state, action: PayloadAction<number>) => {
+    changeCategory: (state, action: PayloadAction<string>) => {
       state.activeCategory = action.payload;
     },
   },

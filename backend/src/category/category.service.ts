@@ -53,4 +53,10 @@ export class CategoryService {
       message: 'Категория успешно удалена',
     };
   }
+
+  public async getAll() {
+    const categories = await this.prisma.category.findMany();
+
+    return categories;
+  }
 }

@@ -18,6 +18,12 @@ import { ProductService } from './product.service';
 export class ProductController {
   public constructor(private readonly productService: ProductService) {}
 
+  @Get('all')
+  @ApiOperation({ summary: 'Получить все товары, их ингредиенты, категорию' })
+  public async getAll() {
+    return this.productService.getAll();
+  }
+
   @Get('search')
   @ApiOperation({ summary: 'Поиск товаров по запросу' })
   public async search(@Query('query') query: string) {

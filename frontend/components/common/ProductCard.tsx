@@ -7,7 +7,7 @@ import { Title } from "./Title";
 
 interface ProductCardProps {
   name: string;
-  price: string;
+  price: number;
   imageUrl: string;
   className?: string;
 }
@@ -21,7 +21,7 @@ const ProductCard = ({
   return (
     <div className={cn(className)}>
       <Link href={`/product/${name}`}>
-        <Image src={imageUrl} alt={imageUrl} width={215} height={215} />
+        <Image unoptimized src={imageUrl} alt={imageUrl} width={215} height={215} />
         <Title text={name} className="mb-1 mt-3 font-bold" />
 
         <p className="text-sm text-gray-400">

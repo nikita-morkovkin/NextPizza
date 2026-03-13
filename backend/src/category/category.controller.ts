@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CategoryService } from './category.service';
 import { ChangeCategoryDto } from './dto/change-category.dto';
@@ -8,6 +16,12 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 @ApiTags('Категории')
 export class CategoryController {
   public constructor(private readonly categoryService: CategoryService) {}
+
+  @Get('all')
+  @ApiOperation({ summary: 'Get all categories' })
+  public async getAll() {
+    return await this.categoryService.getAll();
+  }
 
   @Post()
   @ApiOperation({ summary: 'Create category' })
