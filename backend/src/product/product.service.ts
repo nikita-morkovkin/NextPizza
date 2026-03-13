@@ -81,4 +81,23 @@ export class ProductService {
 
     return products;
   }
+
+  public async getById(productId: string) {
+    const product = await this.prisma.product.findUnique({
+      where: {
+        id: productId,
+      },
+      include: {
+        ingredients: true,
+        productVariants: true,
+        category: true,
+      },
+    });
+
+    if (!product) {
+      throw new NotFoundException('Товар не существует');
+    }
+
+    return product;
+  }
 }

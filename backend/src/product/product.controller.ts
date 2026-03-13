@@ -19,9 +19,17 @@ export class ProductController {
   public constructor(private readonly productService: ProductService) {}
 
   @Get('all')
-  @ApiOperation({ summary: 'Получить все товары, их ингредиенты, категорию' })
+  @ApiOperation({
+    summary: 'Получить все товары, их ингредиенты, категорию, варианты',
+  })
   public async getAll() {
     return this.productService.getAll();
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Получить товар по ID' })
+  public async getById(@Param('id') id: string) {
+    return this.productService.getById(id);
   }
 
   @Get('search')

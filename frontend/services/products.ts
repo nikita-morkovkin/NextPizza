@@ -14,3 +14,11 @@ export const getAll = async () => {
 
   return data;
 };
+
+export const getById = async (productId: string) => {
+  const { data } = await axiosInstance.get<ProductType>(
+    `/product/${productId}`
+  );
+
+  return data;
+};

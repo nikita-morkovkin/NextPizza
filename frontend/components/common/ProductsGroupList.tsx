@@ -52,6 +52,7 @@ const ProductsGroupList = ({
       <div className={cn("grid grid-cols-3 gap-[50px]", listClassname)}>
         {products.map((product) => (
           <ProductCard
+            productId={product.id}
             key={product.id}
             name={product.name}
             price={product.productVariants[0].price || 0}
