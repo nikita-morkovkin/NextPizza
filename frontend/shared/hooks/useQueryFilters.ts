@@ -1,4 +1,4 @@
-import { type PriceRange } from "@/components/common/Filters";
+import { type PriceRange } from "@/shared/components/common/Filters";
 import { useRouter } from "next/navigation";
 import qs from "qs";
 import { useEffect } from "react";

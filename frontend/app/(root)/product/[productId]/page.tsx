@@ -1,7 +1,7 @@
-import { Container, ProductImage } from "@/components/common";
-import GroupVariants from "@/components/common/GroupVariants";
-import { Title } from "@/components/common/Title";
-import { API } from "@/services/api-client";
+import { Container, ProductImage } from "@/shared/components/common";
+import GroupVariants from "@/shared/components/common/GroupVariants";
+import { Title } from "@/shared/components/common/Title";
+import { API } from "@/shared/services/api-client";
 import { notFound } from "next/navigation";
 
 const ITEMS = [

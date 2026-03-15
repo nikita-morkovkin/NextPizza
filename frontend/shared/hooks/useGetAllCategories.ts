@@ -1,4 +1,4 @@
-import { API } from "@/services/api-client";
+import { API } from "@/shared/services/api-client";
 import { useEffect, useState } from "react";
 import { type CategoryType } from "../types/category.type";
 

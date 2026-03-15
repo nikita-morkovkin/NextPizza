@@ -1,10 +1,10 @@
-import { Container } from "@/components/common";
-import Filters from "@/components/common/Filters";
-import ProductsGroupList from "@/components/common/ProductsGroupList";
-import { Title } from "@/components/common/Title";
-import TopBar from "@/components/common/TopBar";
-import { getAll as getAllCategories } from "@/services/categories";
-import { getAll as getAllProducts } from "@/services/products";
+import { Container } from "@/shared/components/common";
+import Filters from "@/shared/components/common/Filters";
+import ProductsGroupList from "@/shared/components/common/ProductsGroupList";
+import { Title } from "@/shared/components/common/Title";
+import TopBar from "@/shared/components/common/TopBar";
+import { getAll as getAllCategories } from "@/shared/services/categories";
+import { getAll as getAllProducts } from "@/shared/services/products";
 
 export default async function Home() {
   const products = await getAllProducts();

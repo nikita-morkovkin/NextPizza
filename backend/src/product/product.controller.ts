@@ -26,16 +26,16 @@ export class ProductController {
     return this.productService.getAll();
   }
 
-  @Get(':id')
-  @ApiOperation({ summary: 'Получить товар по ID' })
-  public async getById(@Param('id') id: string) {
-    return this.productService.getById(id);
-  }
-
   @Get('search')
   @ApiOperation({ summary: 'Поиск товаров по запросу' })
   public async search(@Query('query') query: string) {
     return this.productService.search(query);
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Получить товар по ID' })
+  public async getById(@Param('id') id: string) {
+    return this.productService.getById(id);
   }
 
   @Post('create/:categoryId')

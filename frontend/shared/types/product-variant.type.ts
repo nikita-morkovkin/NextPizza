@@ -4,7 +4,8 @@ export interface ProductVariantType {
   id: number;
 
   price: number;
-  size: number;
+  size?: number;
+  pizzaType?: number;
 
   product: ProductType;
   productId: number;

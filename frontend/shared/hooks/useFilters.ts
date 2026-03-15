@@ -1,4 +1,4 @@
-import { type PriceRange } from "@/components/common/Filters";
+import { type PriceRange } from "@/shared/components/common/Filters";
 import { useState } from "react";
 import { useSet } from "react-use";
 import useTypedSearchParams from "./useTypedSearchParams";

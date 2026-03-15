@@ -1,4 +1,4 @@
-import Providers from "@/components/providers/Providers";
+import Providers from "@/shared/components/providers/Providers";
 import { Nunito } from "next/font/google";
 import { type ReactNode } from "react";
 import "./globals.css";
@@ -16,6 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </head>
       <body className={`${nunito.className} antialiased`}>
         <Providers>{children}</Providers>
       </body>

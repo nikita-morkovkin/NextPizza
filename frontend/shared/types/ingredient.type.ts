@@ -4,4 +4,5 @@ export interface IngredientType {
   name: string;
   price: number;
   type: string;
+  imageUrl: string;
 }
