@@ -1,3 +1,4 @@
+import CardButton from "./card/CartButton";
 import CategoriesList from "./CategoriesList";
 import Container from "./Container";
 import FilterCheckbox from "./FilterCheckbox";
@@ -12,6 +13,7 @@ import SortPopup from "./SortPopup";
 import { Title } from "./Title";
 
 export {
+  CardButton,
   CategoriesList,
   ChooseProductForm,
   Container,
