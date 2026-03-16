@@ -1,5 +1,5 @@
+import { isDev } from "@/shared/lib/is-dev.util";
 import { cn } from "@/shared/lib/utils";
-import { isDev } from "@/shared/utils/is-dev.util";
 import { Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

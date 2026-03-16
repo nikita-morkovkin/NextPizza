@@ -1,4 +1,4 @@
-import { type CategoryType } from "@/shared/types/category.type";
+import { type CategoryType } from "../types";
 import axiosInstance from "./instance";
 
 export const getAll = async () => {

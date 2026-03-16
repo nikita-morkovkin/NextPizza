@@ -10,6 +10,11 @@ interface QueryFilters {
   prices: PriceRange;
 }
 
+/**
+ * Хук для применения фильтров к запросу.
+ * @param filters - объект с фильтрами
+ */
+
 const useQueryFilters = (filters: QueryFilters) => {
   const { pizzaTypes, sizes, selectedIngredients, prices } = filters;
 

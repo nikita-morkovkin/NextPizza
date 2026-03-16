@@ -3,10 +3,14 @@
 import { Button } from "@/shared/components/ui";
 import { pizzaMapType } from "@/shared/constants/pizza.constants";
 import { useIngredientSelection, usePizzaSelection } from "@/shared/hooks";
+import { calcPizzaPrice } from "@/shared/lib";
 import { cn } from "@/shared/lib/utils";
-import { type IngredientType } from "@/shared/types/ingredient.type";
-import type { PizzaSize, PizzaType } from "@/shared/types/pizza.types";
-import { type ProductVariantType } from "@/shared/types/product-variant.type";
+import type {
+  IngredientType,
+  PizzaSize,
+  PizzaType,
+  ProductVariantType,
+} from "@/shared/types";
 import GroupVariants from "../GroupVariants";
 import IngredientItem from "../IngredientItem";
 import PizzaImage from "../PizzaImage";
@@ -16,7 +20,7 @@ interface ChooseModalProductProps {
   imageUrl: string;
   name: string;
   ingredients: IngredientType[];
-  items: ProductVariantType[];
+  productVariants: ProductVariantType[];
   onClickAdd: () => void;
   className?: string;
 }
@@ -26,25 +30,27 @@ const ChoosePizzaForm = ({
   name,
   ingredients,
   onClickAdd,
-  items,
+  productVariants,
   className,
 }: ChooseModalProductProps) => {
-  const { selectedIngredients, addIngredient, ingredientsPrice } =
-    useIngredientSelection({ ingredients });
+  const { selectedIngredients, addIngredient } = useIngredientSelection();
 
   const {
     pizzaSize,
     setPizzaSize,
     pizzaType,
     setPizzaType,
-    pizzaPrice,
     pizzaTypeOptions,
     pizzaSizeOptions,
-  } = usePizzaSelection({
-    productVariants: items,
-  });
+  } = usePizzaSelection(productVariants);
 
-  const totalPrice = pizzaPrice + ingredientsPrice;
+  const { totalPrice } = calcPizzaPrice({
+    productVariants,
+    ingredients,
+    selectedIngredients,
+    pizzaType,
+    pizzaSize,
+  });
 
   const textDetails = `${pizzaSize} см, ${pizzaMapType[
     pizzaType

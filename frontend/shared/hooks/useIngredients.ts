@@ -1,11 +1,16 @@
 import { API } from "@/shared/services/api-client";
 import { useEffect, useState } from "react";
-import { type IngredientType } from "../types/ingredient.type";
+import { type IngredientType } from "../types";
 
 interface ReturnProps {
   ingredients: IngredientType[];
   loading: boolean;
 }
+
+/**
+ * Хук для получения списка ингредиентов.
+ * @returns объект с состоянием и методами для получения списка ингредиентов
+ */
 
 const useIngredients = (): ReturnProps => {
   const [ingredients, setIngredients] = useState<IngredientType[]>([]);

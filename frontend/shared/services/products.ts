@@ -1,4 +1,4 @@
-import { type ProductType } from "@/shared/types/product-type";
+import { type ProductType } from "../types";
 import axiosInstance from "./instance";
 
 export const search = async (query: string) => {

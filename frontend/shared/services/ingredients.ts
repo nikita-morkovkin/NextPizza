@@ -1,4 +1,4 @@
-import { type IngredientType } from "@/shared/types/ingredient.type";
+import { type IngredientType } from "../types";
 import axiosInstance from "./instance";
 
 export const getAll = async () => {

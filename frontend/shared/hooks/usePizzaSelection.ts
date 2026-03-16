@@ -1,26 +1,26 @@
 import { useEffect, useMemo, useState } from "react";
 import { type Variant } from "../components/common/GroupVariants";
 import { pizzaSizes, pizzaTypes } from "../constants/pizza.constants";
-import type { PizzaSize, PizzaType } from "../types/pizza.types";
-import { type ProductVariantType } from "../types/product-variant.type";
-
-interface UsePizzaSelectionProps {
-  productVariants: ProductVariantType[];
-}
+import type { PizzaSize, PizzaType, ProductVariantType } from "../types";
 
 interface ReturnProps {
   pizzaSize: PizzaSize;
   setPizzaSize: (size: PizzaSize) => void;
   pizzaType: PizzaType;
   setPizzaType: (type: PizzaType) => void;
-  pizzaPrice: number;
   pizzaTypeOptions: Variant[];
   pizzaSizeOptions: Variant[];
 }
 
-const usePizzaSelection = ({
-  productVariants,
-}: UsePizzaSelectionProps): ReturnProps => {
+/**
+ * Хук для управления выбором размера и типа пиццы.
+ * @param productVariants  - варианты продуктов
+ * @returns объект с состоянием и методами для выбора размера и типа пиццы
+ */
+
+const usePizzaSelection = (
+  productVariants: ProductVariantType[]
+): ReturnProps => {
   const [pizzaSize, setPizzaSize] = useState<PizzaSize>(20);
   const [pizzaType, setPizzaType] = useState<PizzaType>(1);
 
@@ -53,15 +53,6 @@ const usePizzaSelection = ({
     [availableTypes]
   );
 
-  // Pizza price
-  const pizzaPrice = useMemo(
-    () =>
-      productVariants.find(
-        (item) => item.pizzaType === pizzaType && item.size === pizzaSize
-      )?.price || 0,
-    [pizzaType, pizzaSize, productVariants]
-  );
-
   // Update selection when type or size changes to ensure a valid variant is always chosen
   useEffect(() => {
     const isAvailableVariant = productVariants.some(
@@ -86,7 +77,6 @@ const usePizzaSelection = ({
     setPizzaSize,
     pizzaType,
     setPizzaType,
-    pizzaPrice,
     pizzaSizeOptions,
     pizzaTypeOptions,
   };

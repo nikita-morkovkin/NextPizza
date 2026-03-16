@@ -1,6 +1,6 @@
 import { API } from "@/shared/services/api-client";
 import { useEffect, useState } from "react";
-import { type CategoryType } from "../types/category.type";
+import { type CategoryType } from "../types";
 
 interface ReturnProps {
   categories?: CategoryType[];

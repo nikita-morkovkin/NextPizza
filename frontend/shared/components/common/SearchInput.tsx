@@ -1,9 +1,9 @@
 "use client";
 
+import { isDev } from "@/shared/lib/is-dev.util";
 import { cn } from "@/shared/lib/utils";
 import { API } from "@/shared/services/api-client";
-import { type ProductType } from "@/shared/types/product-type";
-import { isDev } from "@/shared/utils/is-dev.util";
+import { type ProductType } from "@/shared/types";
 import { Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

@@ -9,6 +9,11 @@ interface ReturnProps {
   pizzaTypes?: string;
 }
 
+/**
+ * Хук для получения типизированной строки поиска.
+ * @returns объект с состоянием и методами для получения типизированной строки поиска
+ */
+
 const useTypedSearchParams = (): ReturnProps => {
   const searchParams = useSearchParams();
 

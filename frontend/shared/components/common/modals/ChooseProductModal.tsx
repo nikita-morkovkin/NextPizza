@@ -2,7 +2,7 @@
 
 import { Dialog, DialogContent } from "@/shared/components/ui/dialog";
 import { cn } from "@/shared/lib/utils";
-import { type ProductType } from "@/shared/types/product-type";
+import { type ProductType } from "@/shared/types";
 import { useRouter } from "next/navigation";
 import { ChooseProductForm } from "../forms";
 import ChoosePizzaForm from "../forms/ChoosePizzaForm";
@@ -35,7 +35,7 @@ const ChooseProductModal = ({
             name={product.name}
             ingredients={product.ingredients}
             onClickAdd={() => router.back()}
-            items={product.productVariants}
+            productVariants={product.productVariants}
           />
         ) : (
           <ChooseProductForm imageUrl={product.imageUrl} name={product.name} />
