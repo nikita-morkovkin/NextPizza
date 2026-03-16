@@ -11,7 +11,6 @@ interface CartSheetItemProps extends CartItemType {
 }
 
 const CartSheetItem = ({
-  id,
   imageUrl,
   name,
   price,

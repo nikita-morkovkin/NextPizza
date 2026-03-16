@@ -1,4 +1,5 @@
 import { type CartItemType } from "@/shared/components/common/card/cart-item.type";
+import { type CartResponseType } from "@/shared/types";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { axiosBaseQuery } from "./axiosBaseQuery";
 
@@ -9,7 +10,7 @@ export const cartApi = createApi({
 
   endpoints: (builder) => ({
     // Получить все элементы из корзины
-    fetchCartItems: builder.query<CartItemType[], void>({
+    fetchCartItems: builder.query<CartResponseType, void>({
       query: () => ({ url: "/cart/all", method: "GET" }),
       providesTags: ["Cart"],
     }),

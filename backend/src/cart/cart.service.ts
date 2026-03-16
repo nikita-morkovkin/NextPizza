@@ -27,11 +27,20 @@ export class CartService {
       },
     });
 
-    const itemCount = userCart?.items?.length ?? 0;
+    const totalPrice =
+      userCart?.items?.reduce((acc, item) => {
+        const ingredientsPrice = item.ingredients.reduce(
+          (sum, ing) => sum + ing.price,
+          0,
+        );
+        return (
+          acc + (item.productVariant.price + ingredientsPrice) * item.quantity
+        );
+      }, 0) ?? 0;
 
     return {
       items: userCart?.items,
-      count: itemCount,
+      totalPrice: totalPrice,
     };
   }
 }

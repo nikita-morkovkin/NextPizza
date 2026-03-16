@@ -11,9 +11,9 @@ export class CartController {
   constructor(private readonly cartService: CartService) {}
 
   @Get('all')
-  @ApiOperation({ summary: `Получить список товаров и их количество` })
+  @ApiOperation({ summary: `Получить список товаров и их цену в сумме` })
   @ApiOkResponse({
-    description: 'Список товаров получен и их количество',
+    description: 'Список товаров получен и их цена в сумме',
     type: CartResponseDto,
   })
   @UseGuards(GuestAuthGuard)
