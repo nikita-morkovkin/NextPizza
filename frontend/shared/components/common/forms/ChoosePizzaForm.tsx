@@ -5,6 +5,7 @@ import { pizzaMapType } from "@/shared/constants/pizza.constants";
 import { useIngredientSelection, usePizzaSelection } from "@/shared/hooks";
 import { calcPizzaPrice } from "@/shared/lib";
 import { cn } from "@/shared/lib/utils";
+import { useAddCartItemMutation } from "@/shared/store/api/cart.api";
 import type {
   IngredientType,
   PizzaSize,
@@ -21,7 +22,7 @@ interface ChooseModalProductProps {
   name: string;
   ingredients: IngredientType[];
   productVariants: ProductVariantType[];
-  onClickAdd: () => void;
+  onClickAdd?: () => void;
   className?: string;
 }
 
@@ -34,6 +35,7 @@ const ChoosePizzaForm = ({
   className,
 }: ChooseModalProductProps) => {
   const { selectedIngredients, addIngredient } = useIngredientSelection();
+  const [addCartItem] = useAddCartItemMutation();
 
   const {
     pizzaSize,
@@ -56,7 +58,21 @@ const ChoosePizzaForm = ({
     pizzaType
   ].toLowerCase()} тесто`;
 
-  const handleClickAdd = () => onClickAdd?.();
+  const handleClickAdd = async () => {
+    const productVariant = productVariants.find(
+      (variant) => variant.size === pizzaSize && variant.pizzaType === pizzaType
+    );
+
+    if (productVariant) {
+      await addCartItem({
+        productVariantId: productVariant.id,
+        quantity: 1,
+        ingredientIds: Array.from(selectedIngredients, (id) => String(id)),
+      });
+
+      onClickAdd?.();
+    }
+  };
 
   return (
     <div className={cn("flex flex-1", className)}>

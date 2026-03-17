@@ -1,6 +1,6 @@
 import axiosInstance from "@/shared/services/instance";
 import { BaseQueryFn } from "@reduxjs/toolkit/query";
-import { AxiosError, AxiosRequestConfig } from "axios";
+import { type AxiosError, type AxiosRequestConfig } from "axios";
 
 interface BaseQueryFnReturnProps {
   url: string;

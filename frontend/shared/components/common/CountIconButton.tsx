@@ -10,6 +10,7 @@ interface CountIconButtonProps {
   disabled?: boolean;
   type: CountIconButtonType;
   onClick: () => void;
+  className?: string;
 }
 
 const CountIconButton = ({
@@ -17,6 +18,7 @@ const CountIconButton = ({
   disabled,
   type,
   onClick,
+  className,
 }: CountIconButtonProps) => {
   return (
     <Button
@@ -27,7 +29,8 @@ const CountIconButton = ({
         "p-0 hover:bgprimary hover:text-white disabled:bg-white disabled:border-gray-400 disabled:text-gray-400",
         size === "sm"
           ? "w-[30px] h-[30px] rounded-[10px]"
-          : "w-[38px] h-[38px] rounded-md"
+          : "w-[38px] h-[38px] rounded-md",
+        className
       )}
     >
       {type === "plus" ? (

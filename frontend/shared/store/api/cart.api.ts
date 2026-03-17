@@ -1,7 +1,12 @@
-import { type CartItemType } from "@/shared/components/common/card/cart-item.type";
 import { type CartResponseType } from "@/shared/types";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { axiosBaseQuery } from "./axiosBaseQuery";
+
+export interface CreateCartItemValues {
+  productVariantId: string;
+  quantity: number;
+  ingredientIds?: string[];
+}
 
 export const cartApi = createApi({
   reducerPath: "cartApi",
@@ -17,29 +22,29 @@ export const cartApi = createApi({
 
     // Изменить элементы в корзине
     updateItemQuantity: builder.mutation<
-      CartItemType,
-      { id: number; quantity: number }
+      CartResponseType,
+      { id: string; quantity: number }
     >({
       query: ({ id, quantity }) => ({
         url: `/cart/${id}`,
         method: "PATCH",
-        body: { quantity },
+        data: { quantity },
       }),
       invalidatesTags: ["Cart"],
     }),
 
     // Добавить элемент в корзину
-    addCartItem: builder.mutation<CartItemType, unknown>({
-      query: (values) => ({
+    addCartItem: builder.mutation<CartResponseType, CreateCartItemValues>({
+      query: (dto) => ({
         url: "/cart",
         method: "POST",
-        body: values,
+        data: dto,
       }),
       invalidatesTags: ["Cart"],
     }),
 
     // Удалить элемент из корзины
-    removeCartItem: builder.mutation<void, number>({
+    removeCartItem: builder.mutation<CartResponseType, string>({
       query: (id) => ({
         url: `/cart/${id}`,
         method: "DELETE",

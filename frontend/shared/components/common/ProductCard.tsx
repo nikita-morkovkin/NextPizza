@@ -1,3 +1,5 @@
+"use client";
+
 import { isDev } from "@/shared/lib/is-dev.util";
 import { cn } from "@/shared/lib/utils";
 import { Plus } from "lucide-react";
@@ -24,17 +26,21 @@ const ProductCard = ({
   return (
     <div className={cn(className)}>
       <Link href={`/product/${productId}`}>
-        <Image
-          unoptimized={isDev}
-          src={imageUrl}
-          alt={imageUrl}
-          width={215}
-          height={215}
-        />
+        <div className="flex justify-center p-6 bg-secondary rounded-lg h-[260px]">
+          <Image
+            unoptimized={isDev}
+            src={imageUrl}
+            alt={name}
+            width={215}
+            height={215}
+          />
+        </div>
+
         <Title text={name} className="mb-1 mt-3 font-bold" />
 
         <p className="text-sm text-gray-400">
-          Помидор, сыр, томатный соус и так далее
+          Цыпленок, моцарелла, сыры чеддер и пармезан, сырный соус, томаты, соус
+          альфредо, чеснок
         </p>
 
         <div className="flex justify-between items-center mt-4">

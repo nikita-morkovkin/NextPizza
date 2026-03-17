@@ -21,6 +21,10 @@ const ChooseProductModal = ({
   const isPizzaForm = Boolean(product.productVariants[0].pizzaType);
   const existProduct = Boolean(product);
 
+  const onHandleAdd = () => {
+    router.back();
+  };
+
   return (
     <Dialog open={existProduct} onOpenChange={() => router.back()}>
       <DialogContent
@@ -34,11 +38,17 @@ const ChooseProductModal = ({
             imageUrl={product.imageUrl}
             name={product.name}
             ingredients={product.ingredients}
-            onClickAdd={() => router.back()}
+            onClickAdd={onHandleAdd}
             productVariants={product.productVariants}
           />
         ) : (
-          <ChooseProductForm imageUrl={product.imageUrl} name={product.name} />
+          <ChooseProductForm
+            imageUrl={product.imageUrl}
+            name={product.name}
+            price={product.productVariants[0].price}
+            productVariantId={product.productVariants[0].id}
+            onClickAdd={onHandleAdd}
+          />
         )}
       </DialogContent>
     </Dialog>

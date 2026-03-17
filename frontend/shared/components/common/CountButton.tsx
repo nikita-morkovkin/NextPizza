@@ -26,6 +26,7 @@ const CountButton = ({
       <CountIconButton
         onClick={() => onClick("minus")}
         disabled={value === 1}
+        className="disabled:cursor-not-allowed"
         size={size}
         type={"minus"}
       />

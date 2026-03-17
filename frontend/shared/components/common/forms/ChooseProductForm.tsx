@@ -1,22 +1,41 @@
+"use client";
+
 import { Button } from "@/shared/components/ui";
 import { cn } from "@/shared/lib/utils";
+import { useAddCartItemMutation } from "@/shared/store/api/cart.api";
 import { Title } from "../Title";
 
 interface ChooseModalProductProps {
   imageUrl: string;
   name: string;
+  price: number;
+  productVariantId: string;
+  onClickAdd?: () => void;
   className?: string;
 }
 
-// Temp data
-const price = 350;
-const textDetails = "Что-то, не то не пицца";
+const textDetails = "Продукт со стандартными характеристиками";
 
 const ChooseProductForm = ({
   imageUrl,
   name,
+  price,
+  productVariantId,
+  onClickAdd,
   className,
 }: ChooseModalProductProps) => {
+  const [addCartItem] = useAddCartItemMutation();
+
+  const handleClickAdd = async () => {
+    await addCartItem({
+      productVariantId,
+      quantity: 1,
+      ingredientIds: [],
+    });
+
+    onClickAdd?.();
+  };
+
   return (
     <div className={cn("flex flex-1", className)}>
       <div className="flex items-center justify-center flex-1 relative w-full">
@@ -32,8 +51,11 @@ const ChooseProductForm = ({
 
         <p className="text-gray-400">{textDetails}</p>
 
-        <Button className="h-[55px] mt-10 px-10 text-base rounded-[18px] w-full">
-          В корзину за {price}
+        <Button
+          onClick={handleClickAdd}
+          className="h-[55px] mt-10 px-10 text-base rounded-[18px] w-full"
+        >
+          В корзину за {price} ₽
         </Button>
       </div>
     </div>

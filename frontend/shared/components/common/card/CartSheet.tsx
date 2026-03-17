@@ -1,7 +1,11 @@
 "use client";
 
 import { getCartItemsDetails } from "@/shared/lib";
-import { useFetchCartItemsQuery } from "@/shared/store/api/cart.api";
+import {
+  useFetchCartItemsQuery,
+  useRemoveCartItemMutation,
+  useUpdateItemQuantityMutation,
+} from "@/shared/store/api/cart.api";
 import { PizzaSize, PizzaType } from "@/shared/types";
 import { ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
@@ -22,9 +26,27 @@ const CartSheet = ({
   children,
 }: PropsWithChildren<{ className?: string }>) => {
   const { data, isLoading } = useFetchCartItemsQuery();
+  const [updateItemQuantity] = useUpdateItemQuantityMutation();
+  const [removeCartItem] = useRemoveCartItemMutation();
 
   const items = data?.items || [];
   const totalAmount = data?.totalPrice || 0;
+
+  const onClickCountButton = (
+    id: string,
+    quantity: number,
+    type: "plus" | "minus"
+  ) => {
+    const newQuantity = type === "plus" ? quantity + 1 : quantity - 1;
+
+    if (newQuantity > 0) {
+      updateItemQuantity({ id, quantity: newQuantity });
+    }
+  };
+
+  const onClickRemove = (id: string) => {
+    removeCartItem(id);
+  };
 
   return (
     <div className={className}>
@@ -63,6 +85,10 @@ const CartSheet = ({
                         productVariant.size as PizzaSize,
                         ingredients
                       )}
+                      onClickCountButton={(type) =>
+                        onClickCountButton(id, quantity, type)
+                      }
+                      onClickRemove={() => onClickRemove(id)}
                     />
                   );
                 })}
