@@ -21,9 +21,7 @@ const ChooseProductModal = ({
   const isPizzaForm = Boolean(product.productVariants[0].pizzaType);
   const existProduct = Boolean(product);
 
-  const onHandleAdd = () => {
-    router.back();
-  };
+  const onHandleAdd = () => router.back();
 
   return (
     <Dialog open={existProduct} onOpenChange={() => router.back()}>

@@ -3,6 +3,7 @@
 import { Button } from "@/shared/components/ui";
 import { cn } from "@/shared/lib/utils";
 import { useAddCartItemMutation } from "@/shared/store/api/cart.api";
+import toast from "react-hot-toast";
 import { Title } from "../Title";
 
 interface ChooseModalProductProps {
@@ -24,16 +25,21 @@ const ChooseProductForm = ({
   onClickAdd,
   className,
 }: ChooseModalProductProps) => {
-  const [addCartItem] = useAddCartItemMutation();
+  const [addCartItem, { isLoading }] = useAddCartItemMutation();
 
   const handleClickAdd = async () => {
-    await addCartItem({
-      productVariantId,
-      quantity: 1,
-      ingredientIds: [],
-    });
+    try {
+      await addCartItem({
+        productVariantId,
+        quantity: 1,
+        ingredientIds: [],
+      });
 
-    onClickAdd?.();
+      onClickAdd?.();
+      toast.success(`${name} добавлен в корзину`);
+    } catch {
+      toast.error(`${name} не удалось добавить в корзину`);
+    }
   };
 
   return (
@@ -54,6 +60,7 @@ const ChooseProductForm = ({
         <Button
           onClick={handleClickAdd}
           className="h-[55px] mt-10 px-10 text-base rounded-[18px] w-full"
+          disabled={isLoading}
         >
           В корзину за {price} ₽
         </Button>

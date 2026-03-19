@@ -1,9 +1,13 @@
 "use client";
 
 import { Button } from "@/shared/components/ui";
-import { pizzaMapType } from "@/shared/constants/pizza.constants";
-import { useIngredientSelection, usePizzaSelection } from "@/shared/hooks";
+import {
+  useIngredientSelection,
+  usePizzaSizeSelection,
+  usePizzaTypeSelection,
+} from "@/shared/hooks";
 import { calcPizzaPrice } from "@/shared/lib";
+import { getPizzaTextDetails } from "@/shared/lib/get-pizza-text-details.util";
 import { cn } from "@/shared/lib/utils";
 import { useAddCartItemMutation } from "@/shared/store/api/cart.api";
 import type {
@@ -12,6 +16,7 @@ import type {
   PizzaType,
   ProductVariantType,
 } from "@/shared/types";
+import toast from "react-hot-toast";
 import GroupVariants from "../GroupVariants";
 import IngredientItem from "../IngredientItem";
 import PizzaImage from "../PizzaImage";
@@ -35,16 +40,14 @@ const ChoosePizzaForm = ({
   className,
 }: ChooseModalProductProps) => {
   const { selectedIngredients, addIngredient } = useIngredientSelection();
-  const [addCartItem] = useAddCartItemMutation();
+  const [addCartItem, { isLoading }] = useAddCartItemMutation();
 
-  const {
-    pizzaSize,
-    setPizzaSize,
-    pizzaType,
-    setPizzaType,
-    pizzaTypeOptions,
-    pizzaSizeOptions,
-  } = usePizzaSelection(productVariants);
+  const { pizzaSize, setPizzaSize, pizzaSizeOptions } =
+    usePizzaSizeSelection(productVariants);
+  const { pizzaType, setPizzaType, pizzaTypeOptions } =
+    usePizzaTypeSelection(productVariants);
+
+  const textDetails = getPizzaTextDetails(pizzaSize, pizzaType);
 
   const { totalPrice } = calcPizzaPrice({
     productVariants,
@@ -54,23 +57,25 @@ const ChoosePizzaForm = ({
     pizzaSize,
   });
 
-  const textDetails = `${pizzaSize} см, ${pizzaMapType[
-    pizzaType
-  ].toLowerCase()} тесто`;
-
   const handleClickAdd = async () => {
     const productVariant = productVariants.find(
-      (variant) => variant.size === pizzaSize && variant.pizzaType === pizzaType
+      (variant) =>
+        variant.size === pizzaSize && variant.pizzaType === pizzaType,
     );
 
-    if (productVariant) {
-      await addCartItem({
-        productVariantId: productVariant.id,
-        quantity: 1,
-        ingredientIds: Array.from(selectedIngredients, (id) => String(id)),
-      });
+    try {
+      if (productVariant) {
+        await addCartItem({
+          productVariantId: productVariant.id,
+          quantity: 1,
+          ingredientIds: Array.from(selectedIngredients, (id) => String(id)),
+        });
 
-      onClickAdd?.();
+        onClickAdd?.();
+        toast.success(`${name} добавлена в корзину`);
+      }
+    } catch {
+      toast.error(`${name} не удалось добавить в корзину`);
     }
   };
 
@@ -118,6 +123,7 @@ const ChoosePizzaForm = ({
         <Button
           className={cn("h-[55px] mt-10 px-10 text-base rounded-[18px] w-full")}
           onClick={handleClickAdd}
+          disabled={isLoading}
         >
           В корзину за {totalPrice} ₽
         </Button>

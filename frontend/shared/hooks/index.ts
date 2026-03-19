@@ -1,7 +1,9 @@
 import useFilters from "./useFilters";
 import useIngredients from "./useIngredients";
 import useIngredientSelection from "./useIngredientSelection";
-import usePizzaSelection from "./usePizzaSelection";
+import usePizzaSizeSelection from "./usePizzaSizeSelection";
+import usePizzaTypeSelection from "./usePizzaTypeSelection";
+import usePizzaVariantSelection from "./usePizzaVariantSelection";
 import useQueryfilters from "./useQueryFilters";
 import useTypedSearchParams from "./useTypedSearchParams";
 
@@ -9,7 +11,9 @@ export {
   useFilters,
   useIngredients,
   useIngredientSelection,
-  usePizzaSelection,
+  usePizzaSizeSelection,
+  usePizzaTypeSelection,
+  usePizzaVariantSelection,
   useQueryfilters,
   useTypedSearchParams,
 };

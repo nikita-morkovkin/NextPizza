@@ -2,6 +2,7 @@
 
 import { store } from "@/shared/store/store";
 import { type ReactNode } from "react";
+import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 
 interface ProvidersProps {
@@ -9,7 +10,12 @@ interface ProvidersProps {
 }
 
 const Providers = ({ children }: ProvidersProps) => {
-  return <Provider store={store}>{children}</Provider>;
+  return (
+    <Provider store={store}>
+      {children}
+      <Toaster />
+    </Provider>
+  );
 };
 
 export default Providers;
