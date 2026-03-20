@@ -1,24 +1,27 @@
 "use client";
 
 import { getCartItemsDetails } from "@/shared/lib";
+import { cn } from "@/shared/lib/utils";
 import {
   useFetchCartItemsQuery,
   useRemoveCartItemMutation,
   useUpdateItemQuantityMutation,
 } from "@/shared/store/api/cart.api";
 import { PizzaSize, PizzaType } from "@/shared/types";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader2, Trash } from "lucide-react";
 import Link from "next/link";
 import { type PropsWithChildren } from "react";
 import { Button } from "../../ui";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "../../ui/sheet";
+import { Title } from "../Title";
 import CartSheetItem from "./CartSheetItem";
 
 const CartSheet = ({
@@ -68,32 +71,61 @@ const CartSheet = ({
                 <Loader2 className="w-6 h-6 animate-spin text-primary" />
               </div>
             ) : (
-              <div className="space-y-4 mb-2">
-                {items.map((item) => {
-                  const { productVariant, ingredients, quantity, id } = item;
-                  const { product } = productVariant;
+              <div
+                className={cn(
+                  "space-y-4 mb-2 mt-5",
+                  items.length ? "" : "h-[80%]",
+                )}
+              >
+                {items.length ? (
+                  items.map((item) => {
+                    const { productVariant, ingredients, quantity, id } = item;
+                    const { product } = productVariant;
 
-                  return (
-                    <CartSheetItem
-                      key={id}
-                      id={id}
-                      imageUrl={product.imageUrl}
-                      name={product.name}
-                      price={productVariant.price}
-                      quantity={quantity}
-                      ingredients={ingredients}
-                      details={getCartItemsDetails(
-                        productVariant.pizzaType as PizzaType,
-                        productVariant.size as PizzaSize,
-                        ingredients,
-                      )}
-                      onClickCountButton={(type) =>
-                        onClickCountButton(id, quantity, type)
-                      }
-                      onClickRemove={() => onClickRemove(id)}
-                    />
-                  );
-                })}
+                    return (
+                      <CartSheetItem
+                        key={id}
+                        id={id}
+                        imageUrl={product.imageUrl}
+                        name={product.name}
+                        price={productVariant.price}
+                        quantity={quantity}
+                        ingredients={ingredients}
+                        details={getCartItemsDetails(
+                          productVariant.pizzaType as PizzaType,
+                          productVariant.size as PizzaSize,
+                          ingredients,
+                        )}
+                        onClickCountButton={(type) =>
+                          onClickCountButton(id, quantity, type)
+                        }
+                        onClickRemove={() => onClickRemove(id)}
+                      />
+                    );
+                  })
+                ) : (
+                  <div className="flex flex-col justify-center items-center gap-3 h-full">
+                    <Trash className="size-14" />
+
+                    <div className="flex flex-col items-center gap-1 mt-3">
+                      <Title
+                        text="Корзина пуста"
+                        size="md"
+                      />
+
+                      <p className="text-sm text-muted-foreground">
+                        Добавьте товары, чтобы совершить заказ
+                      </p>
+                    </div>
+
+                    <SheetClose className="w-full">
+                      <Button className="w-[75%] py-6 mt-5">
+                        <ArrowLeft className="w-5 h-5 mr-2" />
+                        Вернуться назад
+                      </Button>
+                    </SheetClose>
+                  </div>
+                )}
               </div>
             )}
           </div>
