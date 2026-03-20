@@ -17,60 +17,29 @@ interface FiltersProps {
   className?: string;
 }
 
-const defaultIngredients = [
-  {
-    text: "Сырный соус",
-    value: "cheese_sauce",
-  },
-  {
-    text: "Чесночный соус",
-    value: "garlic_sauce",
-  },
-  {
-    text: "Острый халапеньо",
-    value: "jalapeno",
-  },
-  {
-    text: "Маринованные огурцы",
-    value: "pickles",
-  },
-  {
-    text: "Свежие томаты",
-    value: "tomatoes",
-  },
-  {
-    text: "Красный лук",
-    value: "red_onion",
-  },
-  {
-    text: "Моцарелла",
-    value: "mozzarella",
-  },
-];
-
 const defaultSizes = [
   {
-    text: "20 см",
-    value: "20",
+    text: "25 см",
+    value: "25",
   },
   {
     text: "30 см",
     value: "30",
   },
   {
-    text: "40 см",
-    value: "40",
+    text: "35 см",
+    value: "35",
   },
 ];
 
 const defaultPizzaTypes = [
   {
     text: "Традиционное",
-    value: "traditional",
+    value: "1",
   },
   {
     text: "Тонкое",
-    value: "thin",
+    value: "2",
   },
 ];
 
@@ -90,7 +59,7 @@ const Filters = ({ className }: FiltersProps) => {
         text: item.name,
         value: String(item.id),
       })),
-    [ingredients]
+    [ingredients],
   );
 
   return (
@@ -158,7 +127,7 @@ const Filters = ({ className }: FiltersProps) => {
         title="Ингредиенты"
         className="mt-5"
         items={items}
-        defaultItems={defaultIngredients}
+        defaultItems={items.slice(0, 6)}
         loading={loading}
         onClickCheckbox={filters.setIngredients}
         selectedIds={filters.selectedIngredients}
