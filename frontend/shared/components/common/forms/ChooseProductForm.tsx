@@ -1,8 +1,10 @@
 "use client";
 
 import { Button } from "@/shared/components/ui";
+import { PRODUCT_STANDARD_TEXT_DETAILS } from "@/shared/constants/product-standard-text-details.constant";
 import { cn } from "@/shared/lib/utils";
 import { useAddCartItemMutation } from "@/shared/store/api/cart.api";
+import { Loader } from "lucide-react";
 import toast from "react-hot-toast";
 import { Title } from "../Title";
 
@@ -14,8 +16,6 @@ interface ChooseModalProductProps {
   onClickAdd?: () => void;
   className?: string;
 }
-
-const textDetails = "Продукт со стандартными характеристиками";
 
 const ChooseProductForm = ({
   imageUrl,
@@ -42,6 +42,15 @@ const ChooseProductForm = ({
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex flex-col justify-center items-center gap-5">
+        <Loader className="animate-spin size-10" />
+        <p>Загрузка...</p>
+      </div>
+    );
+  }
+
   return (
     <div className={cn("flex flex-1", className)}>
       <div className="flex items-center justify-center flex-1 relative w-full">
@@ -55,7 +64,7 @@ const ChooseProductForm = ({
       <div className="w-1/2 p-7 bg-[#f7f6f5]">
         <Title text={name} size="md" className="font-extrabold mb-1" />
 
-        <p className="text-gray-400">{textDetails}</p>
+        <p className="text-gray-400">{PRODUCT_STANDARD_TEXT_DETAILS}</p>
 
         <Button
           onClick={handleClickAdd}

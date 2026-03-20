@@ -20,10 +20,23 @@ export class ProductController {
 
   @Get('all')
   @ApiOperation({
-    summary: 'Получить все товары, их ингредиенты, категорию, варианты',
+    summary:
+      'Получить все товары, их ингредиенты, категорию, варианты, и использованием фильтров размера, типов, ингредиентов, цены от и до и строки запроса',
   })
-  public async getAll() {
-    return this.productService.getAll();
+  public async getAllWithFilters(
+    @Query('sizes') sizes?: string,
+    @Query('pizzaTypes') pizzaTypes?: string,
+    @Query('ingredients') ingredients?: string,
+    @Query('priceFrom') priceFrom?: string,
+    @Query('priceTo') priceTo?: string,
+  ) {
+    return this.productService.getAllWithFilters(
+      sizes,
+      pizzaTypes,
+      ingredients,
+      priceFrom,
+      priceTo,
+    );
   }
 
   @Get('search')

@@ -26,8 +26,10 @@ const CartSheet = ({
   children,
 }: PropsWithChildren<{ className?: string }>) => {
   const { data, isLoading } = useFetchCartItemsQuery();
-  const [updateItemQuantity] = useUpdateItemQuantityMutation();
-  const [removeCartItem] = useRemoveCartItemMutation();
+  const [updateItemQuantity, { isLoading: isUpdating }] =
+    useUpdateItemQuantityMutation();
+  const [removeCartItem, { isLoading: isRemoving }] =
+    useRemoveCartItemMutation();
 
   const items = data?.items || [];
   const totalAmount = data?.totalPrice || 0;
@@ -35,7 +37,7 @@ const CartSheet = ({
   const onClickCountButton = (
     id: string,
     quantity: number,
-    type: "plus" | "minus"
+    type: "plus" | "minus",
   ) => {
     const newQuantity = type === "plus" ? quantity + 1 : quantity - 1;
 
@@ -61,7 +63,7 @@ const CartSheet = ({
           </SheetHeader>
 
           <div className="mt-5 mx-3 overflow-auto flex-1">
-            {isLoading ? (
+            {isLoading || isUpdating || isRemoving ? (
               <div className="flex items-center justify-center h-full">
                 <Loader2 className="w-6 h-6 animate-spin text-primary" />
               </div>
@@ -83,7 +85,7 @@ const CartSheet = ({
                       details={getCartItemsDetails(
                         productVariant.pizzaType as PizzaType,
                         productVariant.size as PizzaSize,
-                        ingredients
+                        ingredients,
                       )}
                       onClickCountButton={(type) =>
                         onClickCountButton(id, quantity, type)

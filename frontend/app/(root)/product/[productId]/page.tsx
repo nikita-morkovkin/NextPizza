@@ -1,6 +1,5 @@
-import { Container, ProductImage } from "@/shared/components/common";
-import GroupVariants from "@/shared/components/common/GroupVariants";
-import { Title } from "@/shared/components/common/Title";
+import { Container } from "@/shared/components/common";
+import ProductForm from "@/shared/components/common/forms/ProductForm";
 import { API } from "@/shared/services/api-client";
 import { notFound } from "next/navigation";
 
@@ -26,6 +25,8 @@ export default async function ProductPage({
 }) {
   const { productId } = await params;
   const product = await API.products.getById(productId);
+  const isPizzaForm = Boolean(product.productVariants[0].pizzaType);
+
 
   if (!product) {
     notFound();
@@ -33,21 +34,7 @@ export default async function ProductPage({
 
   return (
     <Container className="my-10 flex flex-col">
-      <div className="flex flex-1 items-start">
-        <ProductImage src={product.imageUrl} alt={product.name} size={40} />
-
-        <div className="w-[490px] px-7 py-2">
-          <Title
-            text={product.name}
-            size="md"
-            className="font-extrabold mb-1"
-          />
-
-          <p className="text-gray-400">Доп. информация</p>
-
-          <GroupVariants items={ITEMS} selectedValue="2" />
-        </div>
-      </div>
+      <ProductForm isPizzaForm={isPizzaForm} product={product} />
     </Container>
   );
 }

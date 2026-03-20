@@ -9,15 +9,31 @@ export const search = async (query: string) => {
   return data;
 };
 
-export const getAll = async () => {
-  const { data } = await axiosInstance.get<ProductType[]>(`/product/all`);
+export const getAllWithFilters = async (
+  sizes?: string,
+  pizzaTypes?: string,
+  ingredients?: string,
+  priceFrom?: string,
+  priceTo?: string,
+) => {
+  try {
+    const { data } = await axiosInstance.get<ProductType[]>(`/product/all`, {
+      params: {
+        sizes,
+        pizzaTypes,
+        ingredients,
+        priceFrom,
+        priceTo,
+      },
+    });
 
-  return data;
+    return data;
+  } catch {}
 };
 
 export const getById = async (productId: string) => {
   const { data } = await axiosInstance.get<ProductType>(
-    `/product/${productId}`
+    `/product/${productId}`,
   );
 
   return data;

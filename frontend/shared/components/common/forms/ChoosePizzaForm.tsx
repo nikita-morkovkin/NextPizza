@@ -16,6 +16,7 @@ import type {
   PizzaType,
   ProductVariantType,
 } from "@/shared/types";
+import { Loader } from "lucide-react";
 import toast from "react-hot-toast";
 import GroupVariants from "../GroupVariants";
 import IngredientItem from "../IngredientItem";
@@ -57,27 +58,36 @@ const ChoosePizzaForm = ({
     pizzaSize,
   });
 
+  const productVariant = productVariants.find(
+    (variant) => variant.size === pizzaSize && variant.pizzaType === pizzaType,
+  );
+
+  const isDisabledButton = Boolean(!productVariant);
+
+  // WARNING: While you have wrong variant of pizza, you can't add it to cart, because you can use this function without worried about convert productVariantId to string and ingredientsIds
   const handleClickAdd = async () => {
-    const productVariant = productVariants.find(
-      (variant) =>
-        variant.size === pizzaSize && variant.pizzaType === pizzaType,
-    );
-
     try {
-      if (productVariant) {
-        await addCartItem({
-          productVariantId: productVariant.id,
-          quantity: 1,
-          ingredientIds: Array.from(selectedIngredients, (id) => String(id)),
-        });
+      await addCartItem({
+        productVariantId: String(productVariant?.id),
+        quantity: 1,
+        ingredientIds: Array.from(selectedIngredients, (id) => String(id)),
+      });
 
-        onClickAdd?.();
-        toast.success(`${name} добавлена в корзину`);
-      }
+      onClickAdd?.();
+      toast.success(`${name} добавлена в корзину`);
     } catch {
       toast.error(`${name} не удалось добавить в корзину`);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col justify-center items-center gap-5">
+        <Loader className="animate-spin size-10" />
+        <p>Загрузка...</p>
+      </div>
+    );
+  }
 
   return (
     <div className={cn("flex flex-1", className)}>
@@ -121,11 +131,13 @@ const ChoosePizzaForm = ({
         </div>
 
         <Button
-          className={cn("h-[55px] mt-10 px-10 text-base rounded-[18px] w-full")}
+          className={cn(
+            "h-[55px] mt-10 px-10 text-base rounded-[18px] w-full disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed",
+          )}
           onClick={handleClickAdd}
-          disabled={isLoading}
+          disabled={isLoading || isDisabledButton}
         >
-          В корзину за {totalPrice} ₽
+          {isDisabledButton ? "Нет в наличии" : `В корзину за ${totalPrice} ₽`}
         </Button>
       </div>
     </div>

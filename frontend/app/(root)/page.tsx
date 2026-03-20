@@ -3,12 +3,33 @@ import Filters from "@/shared/components/common/Filters";
 import ProductsGroupList from "@/shared/components/common/ProductsGroupList";
 import { Title } from "@/shared/components/common/Title";
 import TopBar from "@/shared/components/common/TopBar";
-import { getAll as getAllCategories } from "@/shared/services/categories";
-import { getAll as getAllProducts } from "@/shared/services/products";
+import { API } from "@/shared/services/api-client";
 
-export default async function Home() {
-  const products = await getAllProducts();
-  const categories = await getAllCategories();
+interface SearchParams {
+  sizes?: string;
+  pizzaTypes?: string;
+  ingredients?: string;
+  priceFrom?: string;
+  priceTo?: string;
+}
+
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) {
+  const { sizes, ingredients, pizzaTypes, priceFrom, priceTo } =
+    await searchParams;
+
+  const products = await API.products.getAllWithFilters(
+    sizes,
+    pizzaTypes,
+    ingredients,
+    priceFrom,
+    priceTo,
+  );
+
+  const categories = await API.categories.getAll();
 
   return (
     <>
@@ -28,14 +49,16 @@ export default async function Home() {
             <div className="flex flex-col gap-16">
               {categories
                 .filter((category) =>
-                  products.some((product) => product.categoryId === category.id)
+                  products?.some(
+                    (product) => product.categoryId === category.id,
+                  ),
                 )
                 .map((category) => (
                   <ProductsGroupList
                     key={category.id}
                     title={category.name}
-                    products={products.filter(
-                      (product) => product.categoryId === category.id
+                    products={products?.filter(
+                      (product) => product.categoryId === category.id,
                     )}
                     categoryId={category.id}
                   />

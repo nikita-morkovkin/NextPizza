@@ -70,16 +70,48 @@ export class ProductService {
     });
   }
 
-  public async getAll() {
-    const products = await this.prisma.product.findMany({
+  public async getAllWithFilters(
+    sizes?: string,
+    pizzaTypes?: string,
+    ingredients?: string,
+    priceFrom?: string,
+    priceTo?: string,
+  ) {
+    const variantFilters = {
+      ...(pizzaTypes && {
+        pizzaType: { in: pizzaTypes.split(',').map(Number) },
+      }),
+      ...(sizes && { size: { in: sizes.split(',').map(Number) } }),
+      ...(priceFrom &&
+        priceTo && {
+          price: { gte: Number(priceFrom), lte: Number(priceTo) },
+        }),
+    };
+
+    return this.prisma.product.findMany({
+      where: {
+        ...(ingredients && {
+          ingredients: {
+            some: { id: { in: ingredients.split(',') } },
+          },
+        }),
+        ...(Object.keys(variantFilters).length > 0 && {
+          productVariants: {
+            some: variantFilters,
+          },
+        }),
+      },
       include: {
         ingredients: true,
-        productVariants: true,
         category: true,
+        productVariants: {
+          where: variantFilters,
+        },
+      },
+      orderBy: {
+        createdAt: 'asc',
       },
     });
-
-    return products;
   }
 
   public async getById(productId: string) {
