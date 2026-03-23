@@ -50,7 +50,7 @@ const CheckoutSheet = () => {
             <ShoppingCart size={48} className="text-gray-200 mb-4" />
             <h3 className="text-xl font-bold">Ваша корзина пуста</h3>
             <p className="text-gray-400 mt-1">
-              Добавьте хотя бы одну пиццу, чтобы совершить заказ
+              Добавьте хотя бы одну товар, чтобы совершить заказ
             </p>
           </div>
         ) : (
