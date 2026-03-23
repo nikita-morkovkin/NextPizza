@@ -31,6 +31,7 @@ const CartSheet = ({
   const { data, isLoading } = useFetchCartItemsQuery();
   const [updateItemQuantity, { isLoading: isUpdating }] =
     useUpdateItemQuantityMutation();
+
   const [removeCartItem, { isLoading: isRemoving }] =
     useRemoveCartItemMutation();
 
@@ -108,10 +109,7 @@ const CartSheet = ({
                     <Trash className="size-14" />
 
                     <div className="flex flex-col items-center gap-1 mt-3">
-                      <Title
-                        text="Корзина пуста"
-                        size="md"
-                      />
+                      <Title text="Корзина пуста" size="md" />
 
                       <p className="text-sm text-muted-foreground">
                         Добавьте товары, чтобы совершить заказ
@@ -141,7 +139,7 @@ const CartSheet = ({
                   <span className="font-bold text-lg">{totalAmount} ₽</span>
                 </div>
 
-                <Link href="/cart">
+                <Link href="/checkout">
                   <Button type="submit" className="w-full h-12 text-base">
                     Оформить заказ
                     <ArrowRight className="w-5 ml-2" />

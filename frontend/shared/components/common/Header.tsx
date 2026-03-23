@@ -8,10 +8,16 @@ import SearchInput from "./SearchInput";
 import CardButton from "./card/CartButton";
 
 interface HeaderProps {
+  isEnableSearchInput?: boolean;
+  isEnableBuyButton?: boolean;
   className?: string;
 }
 
-const Header = ({ className }: HeaderProps) => {
+const Header = ({
+  isEnableSearchInput = true,
+  isEnableBuyButton = true,
+  className,
+}: HeaderProps) => {
   return (
     <header className={cn("border border-b", className)}>
       <Container className="flex items-center justify-between py-8">
@@ -29,18 +35,23 @@ const Header = ({ className }: HeaderProps) => {
         </Link>
 
         {/* Search bar */}
-        <div className="mx-10 flex-1">
-          <SearchInput />
-        </div>
+        {isEnableSearchInput && (
+          <div className="mx-10 flex-1">
+            <SearchInput />
+          </div>
+        )}
 
         {/* Right side */}
         <div className="flex items-center gap-3">
-          <Button variant={"outline"} className="flex items-center gap-1">
+          <Button
+            variant={"outline"}
+            className="flex items-center gap-1 hover:bg-primary hover:text-white transition duration-300"
+          >
             <User size={16} />
             Войти
           </Button>
 
-          <CardButton />
+          {isEnableBuyButton && <CardButton />}
         </div>
       </Container>
     </header>

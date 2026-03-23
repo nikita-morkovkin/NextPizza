@@ -1,11 +1,16 @@
 "use client";
 
+import { cn } from "@/shared/lib/utils";
 import { useFetchCartItemsQuery } from "@/shared/store/api/cart.api";
 import { ArrowRight, ShoppingCart } from "lucide-react";
 import { Button } from "../../ui";
 import CartSheet from "./CartSheet";
 
-const CartButton = () => {
+interface CartButtonProps {
+  className?: string;
+}
+
+const CartButton = ({ className }: CartButtonProps) => {
   const { data } = useFetchCartItemsQuery();
 
   const totalPrice = data?.totalPrice;
@@ -13,7 +18,12 @@ const CartButton = () => {
 
   return (
     <CartSheet>
-      <Button className="group relative flex items-center overflow-hidden">
+      <Button
+        className={cn(
+          "group relative flex items-center overflow-hidden",
+          className,
+        )}
+      >
         <b className="text-white">{totalPrice} ₽</b>
 
         <span className="h-4 w-px bg-white/30 mx-3" />

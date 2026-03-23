@@ -11,6 +11,7 @@ import * as Modals from "./modals";
 import ProductImage from "./PizzaImage";
 import SortPopup from "./SortPopup";
 import { Title } from "./Title";
+import WhiteBlock from "./WhiteBlock";
 
 export {
   CardButton,
@@ -26,4 +27,5 @@ export {
   ProductImage,
   SortPopup,
   Title,
+  WhiteBlock,
 };

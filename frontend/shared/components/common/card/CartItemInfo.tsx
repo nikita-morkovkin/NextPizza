@@ -11,7 +11,7 @@ const CartItemInfo = ({ name, details, className }: CartItemInfoProps) => {
         <h2 className="text-lg font-bold flex-1 leading-6">{name}</h2>
       </div>
 
-      <p className="text-xs text-gray-400">{details}</p>
+      <p className="text-xs text-gray-400 w-9/12">{details}</p>
     </div>
   );
 };

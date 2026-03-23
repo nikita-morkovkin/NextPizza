@@ -1,3 +1,5 @@
+import ChoosePizzaForm from "./ChoosePizzaForm";
 import ChooseProductForm from "./ChooseProductForm";
+import ProductForm from "./ProductForm";
 
-export { ChooseProductForm };
+export { ChoosePizzaForm, ChooseProductForm, ProductForm };
