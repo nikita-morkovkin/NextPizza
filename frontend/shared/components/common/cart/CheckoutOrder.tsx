@@ -1,25 +1,20 @@
 "use client";
 
-import { calcTotalBreakdown } from "@/shared/lib/calc-total-breakdown.util";
+import useGetProductPrices from "@/shared/hooks/useGetProductPrices";
 import { cn } from "@/shared/lib/utils";
-import { useFetchCartItemsQuery } from "@/shared/store/api/cart.api";
 import { ArrowRight, Package, Percent, Truck } from "lucide-react";
 import { Button, Skeleton } from "../../ui";
 import WhiteBlock from "../WhiteBlock";
 import CheckoutItemDetails from "./CheckoutItemDetails";
 
 interface CheckoutOrderProps {
+  isSubmitting: boolean;
   className?: string;
 }
 
-const CheckoutOrder = ({ className }: CheckoutOrderProps) => {
-  const { data, isLoading } = useFetchCartItemsQuery();
-  const productPrice = data?.totalPrice || 0;
-
-  const { originalPrice, taxAmount, deliveryFee } =
-    calcTotalBreakdown(productPrice);
-
-  const totalPrice = originalPrice + taxAmount + deliveryFee;
+const CheckoutOrder = ({ isSubmitting, className }: CheckoutOrderProps) => {
+  const { isLoading, originalPrice, taxAmount, deliveryFee, totalPrice } =
+    useGetProductPrices();
 
   return (
     <div className={cn(`w-[450px]`, className)}>
@@ -65,8 +60,8 @@ const CheckoutOrder = ({ className }: CheckoutOrderProps) => {
 
         <Button
           type="submit"
-          disabled={isLoading}
-          className="w-full h-14 rounded-xl mt-6 text-base font-bold"
+          disabled={isLoading || isSubmitting}
+          className="w-full h-14 rounded-xl mt-6 text-base font-bold hover:text-white hover:bg-primary transition duration-300"
         >
           Перейти к оплате
           <ArrowRight size={6} />

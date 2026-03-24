@@ -20,13 +20,12 @@ const CountButton = ({
     <div
       className={cn(
         "inline-flex items-center justify-between gap-3",
-        className
+        className,
       )}
     >
       <CountIconButton
         onClick={() => onClick("minus")}
         disabled={value === 1}
-        className="disabled:cursor-not-allowed"
         size={size}
         type={"minus"}
       />

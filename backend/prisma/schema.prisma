@@ -153,8 +153,8 @@ model Order {
 
   items Json
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String @map("user_id")
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String? @map("user_id")
 
   fullName String  @map("full_name")
   email    String

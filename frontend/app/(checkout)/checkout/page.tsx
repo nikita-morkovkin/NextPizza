@@ -7,17 +7,19 @@ import {
   CheckoutPersonalForm,
   CheckoutSheet,
 } from "@/shared/components/common/cart";
+import { useCreateOrder, useGetProductPrices } from "@/shared/hooks";
 import { cn } from "@/shared/lib/utils";
 import {
   checkoutUserInfoSchema,
   type CheckoutUserInfoSchemaType,
 } from "@/shared/schemas/checkout-user-info.schema";
-import { useFetchCartItemsQuery } from "@/shared/store/api/cart.api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 
 export default function CheckoutPage() {
-  const { isLoading } = useFetchCartItemsQuery();
+  const { isSubmitting, createOrder } = useCreateOrder();
+  const { isLoading } = useGetProductPrices();
+
   const form = useForm<CheckoutUserInfoSchemaType>({
     resolver: zodResolver(checkoutUserInfoSchema),
     mode: "onChange",
@@ -26,9 +28,8 @@ export default function CheckoutPage() {
     },
   });
 
-  // TODO: Replace console.log to server request
   const onSubmit = (data: CheckoutUserInfoSchemaType) => {
-    console.log(data);
+    createOrder(data);
   };
 
   return (
@@ -58,7 +59,7 @@ export default function CheckoutPage() {
               />
             </div>
 
-            <CheckoutOrder />
+            <CheckoutOrder isSubmitting={isSubmitting} />
           </div>
         </form>
       </FormProvider>
