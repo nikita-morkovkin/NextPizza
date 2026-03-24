@@ -1,10 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import { MailService } from 'src/mail/mail.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 
 @Injectable()
 export class OrderService {
-  public constructor(private readonly prisma: PrismaService) {}
+  private readonly logger = new Logger(OrderService.name);
+
+  public constructor(
+    private readonly prisma: PrismaService,
+    private readonly mailService: MailService,
+  ) {}
 
   public async create(token: string, data: CreateOrderDto) {
     const {
@@ -18,7 +24,7 @@ export class OrderService {
       items,
     } = data;
 
-    return await this.prisma.order.create({
+    await this.prisma.order.create({
       data: {
         token,
         userId: userId || '',
@@ -30,6 +36,10 @@ export class OrderService {
         totalAmount,
         items,
       },
+    });
+
+    this.mailService.sendEmail(email).catch((error) => {
+      this.logger.error(`Failed to send email to ${email}:`, error);
     });
   }
 }
