@@ -9,14 +9,19 @@ interface ReturnProps {
   pizzaTypeOptions: Variant[];
 }
 
+/**
+ * Хук для управления выбором типа пиццы.
+ * @returns объект с состоянием и методами для выбора типа пиццы
+ */
+
 const usePizzaTypeSelection = (
-  productVariants: ProductVariantType[]
+  productVariants: ProductVariantType[],
 ): ReturnProps => {
   const [pizzaType, setPizzaType] = useState<PizzaType>(1);
 
   const availableTypes = useMemo(
     () => [...new Set(productVariants.map((item) => item.pizzaType))],
-    [productVariants]
+    [productVariants],
   );
 
   const pizzaTypeOptions = useMemo(
@@ -25,7 +30,7 @@ const usePizzaTypeSelection = (
         ...item,
         disabled: !availableTypes.includes(Number(item.value) as PizzaType),
       })),
-    [availableTypes]
+    [availableTypes],
   );
 
   return {

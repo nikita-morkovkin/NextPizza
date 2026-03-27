@@ -7,6 +7,11 @@ interface ReturnProps {
   isLoading: boolean;
 }
 
+/**
+ * Хук для получения всех категорий.
+ * @returns объект с состоянием и методами для получения всех категорий
+ */
+
 export const useGetAllCategories = (): ReturnProps => {
   const [categories, setCategories] = useState<CategoryType[]>();
   const [isLoading, setIsLoading] = useState(true);

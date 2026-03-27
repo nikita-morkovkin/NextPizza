@@ -11,6 +11,11 @@ interface ReturnProps {
   createOrder: (data: CheckoutUserInfoSchemaType) => void;
 }
 
+/**
+ * Хук для создания заказа.
+ * @returns объект с состоянием и методами для создания заказа
+ */
+
 const useCreateOrder = (): ReturnProps => {
   const { totalPrice, convertedItems } = useGetProductPrices();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);

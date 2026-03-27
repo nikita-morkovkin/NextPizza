@@ -3,6 +3,11 @@ import { useState } from "react";
 import { useSet } from "react-use";
 import useTypedSearchParams from "./useTypedSearchParams";
 
+/**
+ * Хук для управления фильтрами.
+ * @returns объект с состоянием и методами для управления фильтрами
+ */
+
 const useFilters = () => {
   const searchParams = useTypedSearchParams();
 

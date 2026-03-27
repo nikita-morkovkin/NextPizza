@@ -9,6 +9,11 @@ interface UsePizzaVariantSelection {
   setPizzaType: (type: PizzaType) => void;
 }
 
+/**
+ * Хук для управления выбором варианта пиццы.
+ * @returns объект с состоянием и методами для выбора варианта пиццы
+ */
+
 const usePizzaVariantSelection = ({
   productVariants,
   pizzaSize,
