@@ -9,6 +9,7 @@ import Header from "./Header";
 import IngredientItem from "./IngredientItem";
 import * as Modals from "./modals";
 import ProductImage from "./PizzaImage";
+import ProfileButton from "./ProfileButton";
 import SortPopup from "./SortPopup";
 import { Title } from "./Title";
 import WhiteBlock from "./WhiteBlock";
@@ -25,6 +26,7 @@ export {
   IngredientItem,
   Modals,
   ProductImage,
+  ProfileButton,
   SortPopup,
   Title,
   WhiteBlock,

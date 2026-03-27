@@ -1,6 +1,8 @@
 "use client";
 
 import { store } from "@/shared/store/store";
+import { SessionProvider } from "next-auth/react";
+import NextTopLoader from "nextjs-toploader";
 import { type ReactNode } from "react";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
@@ -12,7 +14,8 @@ interface ProvidersProps {
 const Providers = ({ children }: ProvidersProps) => {
   return (
     <Provider store={store}>
-      {children}
+      <NextTopLoader color="var(--primary)" />
+      <SessionProvider>{children}</SessionProvider>
       <Toaster />
     </Provider>
   );

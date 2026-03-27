@@ -1,3 +1,4 @@
+import * as auth from "./auth";
 import * as categories from "./categories";
 import * as ingredients from "./ingredients";
 import * as order from "./order";
@@ -8,4 +9,5 @@ export const API = {
   ingredients,
   categories,
   order,
+  auth,
 };

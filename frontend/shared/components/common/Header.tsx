@@ -1,11 +1,14 @@
+"use client";
+
 import { cn } from "@/shared/lib/utils";
-import { User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "../ui";
-import Container from "./Container";
-import SearchInput from "./SearchInput";
+import { useState } from "react";
 import CardButton from "./card/CartButton";
+import Container from "./Container";
+import { AuthModal } from "./modals";
+import ProfileButton from "./ProfileButton";
+import SearchInput from "./SearchInput";
 
 interface HeaderProps {
   isEnableSearchInput?: boolean;
@@ -18,6 +21,8 @@ const Header = ({
   isEnableBuyButton = true,
   className,
 }: HeaderProps) => {
+  const [openModal, setIsOpenModal] = useState<boolean>(false);
+
   return (
     <header className={cn("border border-b", className)}>
       <Container className="flex items-center justify-between py-8">
@@ -43,13 +48,9 @@ const Header = ({
 
         {/* Right side */}
         <div className="flex items-center gap-3">
-          <Button
-            variant={"outline"}
-            className="flex items-center gap-1 hover:bg-primary hover:text-white transition duration-300"
-          >
-            <User size={16} />
-            Войти
-          </Button>
+          <AuthModal isOpen={openModal} onClose={() => setIsOpenModal(false)} />
+
+          <ProfileButton onClickSignIn={() => setIsOpenModal(true)} />
 
           {isEnableBuyButton && <CardButton />}
         </div>
