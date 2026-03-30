@@ -59,7 +59,7 @@ export class AuthService {
   }
 
   public async getMe(email: string) {
-    return await this.prisma.user.findUnique({
+    const user = await this.prisma.user.findUnique({
       where: {
         email,
       },
@@ -67,5 +67,11 @@ export class AuthService {
         password: true,
       },
     });
+
+    if (!user) {
+      throw new NotFoundException('Пользователь не найден');
+    }
+
+    return user;
   }
 }

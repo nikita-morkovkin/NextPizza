@@ -1,5 +1,10 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { AuthCreateDto } from './dto/auth-create.dto';
 import { AuthSignInDto } from './dto/auth-sign-in.dto';
@@ -26,6 +31,7 @@ export class AuthController {
   @Get('me/:email')
   @ApiOperation({ summary: 'Get user info' })
   @ApiOkResponse({ description: 'User info' })
+  @ApiNotFoundResponse({ description: 'User not found' })
   public async getMe(@Param('email') email: string) {
     return await this.authService.getMe(email);
   }
