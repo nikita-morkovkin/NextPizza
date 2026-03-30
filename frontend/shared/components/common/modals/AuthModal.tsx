@@ -44,7 +44,7 @@ const AuthModal = ({ isOpen, onClose }: AuthModalProps) => {
         {formType === "login" ? (
           <LoginForm onClose={handleOpenChange} />
         ) : (
-          <RegisterForm />
+          <RegisterForm onClose={handleOpenChange} />
         )}
         <hr />
         <div className="flex gap-2 justify-center">

@@ -29,14 +29,10 @@ const LoginForm = ({ onClose }: LoginFormProps) => {
 
   const onSubmit = async (data: LoginSchemaType) => {
     try {
-      const response = await signIn("credentials", {
+      await signIn("credentials", {
         ...data,
         redirect: false,
       });
-
-      if (!response?.ok) {
-        throw Error();
-      }
 
       onClose();
 
@@ -57,7 +53,7 @@ const LoginForm = ({ onClose }: LoginFormProps) => {
         <div className="mr-2">
           <Title text="Вход в аккаунт" size="md" className="font-bold" />
           <p className="text-gray-400">
-            Введите свою почту и пароль, чтобы войти в свой аккаунт
+            Введите свою почту и пароль, чтобы войти в аккаунт
           </p>
         </div>
       </div>
