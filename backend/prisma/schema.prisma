@@ -182,3 +182,31 @@ model VerificationCode {
   @@unique([code, userId])
   @@map("verification_codes")
 }
+
+model Story {
+  id String @id @default(uuid())
+
+  previewImage String @map("preview_image")
+
+  items StoryItem[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("stories")
+}
+
+model StoryItem {
+  id String @id @default(uuid())
+
+  name     String
+  imageUrl String @map("image_url")
+
+  story   Story?  @relation(fields: [storyId], references: [id])
+  storyId String? @map("story_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("story_items")
+}

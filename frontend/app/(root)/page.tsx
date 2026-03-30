@@ -1,8 +1,6 @@
-import { Container } from "@/shared/components/common";
+import { Container, Stories, Title, TopBar } from "@/shared/components/common";
 import Filters from "@/shared/components/common/Filters";
 import ProductsGroupList from "@/shared/components/common/ProductsGroupList";
-import { Title } from "@/shared/components/common/Title";
-import TopBar from "@/shared/components/common/TopBar";
 import { API } from "@/shared/services/api-client";
 
 interface SearchParams {
@@ -38,6 +36,8 @@ export default async function HomePage({
       </Container>
 
       <TopBar />
+
+      <Stories />
 
       <Container className="mt-[36px] pb-14">
         <div className="flex gap-[60px]">

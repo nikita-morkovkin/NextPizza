@@ -11,7 +11,9 @@ import * as Modals from "./modals";
 import ProductImage from "./PizzaImage";
 import ProfileButton from "./ProfileButton";
 import SortPopup from "./SortPopup";
+import Stories from "./Stories";
 import { Title } from "./Title";
+import TopBar from "./TopBar";
 import WhiteBlock from "./WhiteBlock";
 
 export {
@@ -28,6 +30,8 @@ export {
   ProductImage,
   ProfileButton,
   SortPopup,
+  Stories,
   Title,
+  TopBar,
   WhiteBlock,
 };

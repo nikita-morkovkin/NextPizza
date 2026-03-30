@@ -3,6 +3,7 @@ import * as categories from "./categories";
 import * as ingredients from "./ingredients";
 import * as order from "./order";
 import * as products from "./products";
+import * as stories from "./stories";
 import * as user from "./user";
 
 export const API = {
@@ -12,4 +13,5 @@ export const API = {
   order,
   auth,
   user,
+  stories,
 };
